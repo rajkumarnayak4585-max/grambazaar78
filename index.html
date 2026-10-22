@@ -1,1 +1,298 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GramBazaar | Raj Kumar Nayak</title>
+<style>
+:root {
+  --green:#176b45;
+  --dark:#123d2c;
+  --light:#f3f8f1;
+  --orange:#ffb648;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f7f9f5;color:#222}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.topbar{background:var(--dark);color:white;text-align:center;padding:9px;font-size:13px}
+header{background:white;padding:15px 6%;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;box-shadow:0 2px 10px #0000000a}
+.logo{font-size:27px;font-weight:800;color:var(--green)}
+.logo span{color:#f19a22}
+nav{display:flex;gap:18px;flex-wrap:wrap}
+nav a{color:#333;text-decoration:none;font-weight:600;font-size:14px}
+.cart-button,.primary{background:var(--green);color:white;border:0;border-radius:10px;padding:11px 16px;font-weight:bold}
+.hero{margin:25px auto;width:90%;max-width:1250px;min-height:350px;border-radius:22px;overflow:hidden;display:flex;align-items:center;background:linear-gradient(90deg,#103c29ed,#103c2960),url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1600&q=85') center/cover;color:white}
+.hero-content{padding:45px;max-width:650px}
+.hero .tag{display:inline-block;background:#ffffff25;padding:8px 12px;border-radius:30px;margin-bottom:17px}
+.hero h1{font-size:clamp(32px,5vw,54px);line-height:1.12;margin-bottom:15px}
+.hero p{font-size:17px;line-height:1.6;margin-bottom:23px}
+.hero .primary{background:var(--orange);color:#2d2d2d}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;width:90%;max-width:1250px;margin:25px auto}
+.feature{background:white;padding:20px;border-radius:14px;border:1px solid #e7eee4}
+.feature b{display:block;margin-bottom:6px;color:var(--dark)}
+.feature span{font-size:13px;color:#666}
+.section{width:90%;max-width:1250px;margin:40px auto}
+.section-heading{display:flex;justify-content:space-between;align-items:end;gap:15px;flex-wrap:wrap;margin-bottom:20px}
+.section h2{font-size:28px;color:#183e2b;margin-bottom:7px}
+.muted{color:#6a756c;font-size:14px}
+.searchbar{width:100%;padding:13px;border:1px solid #dce4d9;border-radius:11px;background:white;margin:15px 0}
+.categories{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0 22px}
+.category{padding:9px 14px;border-radius:30px;border:1px solid #dce5d8;background:white;color:#34513e}
+.category.active,.category:hover{background:var(--green);color:white;border-color:var(--green)}
+.products{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.card{background:white;border:1px solid #e9eee7;border-radius:16px;overflow:hidden;transition:.2s}
+.card:hover{transform:translateY(-4px);box-shadow:0 10px 24px #193a2010}
+.card img{width:100%;height:185px;object-fit:cover;display:block;background:#e8eee5}
+.card-body{padding:14px}
+.pill{display:inline-block;background:#e9f5e8;color:#216641;padding:5px 8px;border-radius:20px;font-size:11px;margin-bottom:9px}
+.card h3{font-size:17px;margin-bottom:7px}
+.description{font-size:12px;color:#758075;min-height:30px;line-height:1.4}
+.price{font-weight:800;color:var(--green);font-size:19px;margin:12px 0}
+.price small{font-size:12px;color:#777;font-weight:normal}
+.add{width:100%;padding:10px;border:0;border-radius:9px;background:#e7f3e8;color:#176b45;font-weight:bold}
+.add:hover{background:var(--green);color:white}
+.empty{grid-column:1/-1;padding:35px;text-align:center;background:white;border-radius:12px}
+.order-layout{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.panel{background:white;padding:23px;border-radius:16px;border:1px solid #e5ece2}
+.panel h3{margin-bottom:15px}
+.cart-row{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid #eee;padding:13px 0}
+.cart-row small{display:block;color:#777;margin-top:4px}
+.qty{display:flex;align-items:center;gap:9px}
+.qty button{width:28px;height:28px;border:0;border-radius:7px;background:#e9f3e8;color:#185e3c;font-weight:bold}
+.total{display:flex;justify-content:space-between;font-weight:bold;font-size:20px;margin:20px 0}
+.field{margin-bottom:13px}
+.field label{display:block;font-size:13px;font-weight:bold;margin-bottom:6px}
+.field input,.field textarea,.field select{width:100%;padding:12px;border:1px solid #dbe4d9;border-radius:9px;background:white}
+.field textarea{min-height:80px;resize:vertical}
+.full{width:100%;padding:13px}
+.note{font-size:12px;color:#777;line-height:1.5;margin-top:12px}
+footer{background:#123d2c;color:white;padding:32px 6%;margin-top:45px}
+.footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer p{color:#d3e1d5;font-size:13px;line-height:1.7;margin-top:8px}
+footer a{color:#ffcb6b}
+@media(max-width:900px){.products{grid-template-columns:repeat(3,minmax(0,1fr))}.card img{height:160px}}
+@media(max-width:650px){header{padding:14px 5%}nav{order:3;width:100%;gap:14px}.hero{width:92%;min-height:310px}.hero-content{padding:26px}.features{grid-template-columns:1fr;width:92%}.section{width:92%}.products{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.card img{height:135px}.card-body{padding:10px}.card h3{font-size:15px}.price{font-size:16px}.order-layout{grid-template-columns:1fr}.section h2{font-size:24px}}
+@media(max-width:370px){.products{grid-template-columns:1fr}.card img{height:200px}}
+</style>
+</head>
+<body>
+<div class="topbar">🌿 आपका अपना बाजार — स्थानीय सामान, एक ही जगह!</div>
+
+<header>
+  <div class="logo">🌱 Gram<span>Bazaar</span></div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#products">Products</a>
+    <a href="#about">About</a>
+    <a href="#order">Order</a>
+  </nav>
+  <button class="cart-button" onclick="document.querySelector('#order').scrollIntoView({behavior:'smooth'})">
+    🛒 Cart (<span id="cartCount">0</span>)
+  </button>
+</header>
+
+<section class="hero" id="home">
+  <div class="hero-content">
+    <span class="tag">🌾 Local Products • Trusted Shopping</span>
+    <h1>गाँव का बाजार,<br>अब ऑनलाइन!</h1>
+    <p>चावल, गेहूँ, फर्नीचर, निर्माण सामग्री, पेंट, पौधे और रोजमर्रा का सामान आसानी से चुनें। अपना ऑर्डर WhatsApp पर भेजें।</p>
+    <button class="primary" onclick="document.querySelector('#products').scrollIntoView({behavior:'smooth'})">सामान देखें →</button>
+  </div>
+</section>
+
+<section class="features" id="about">
+  <div class="feature"><b>🌾 रोजमर्रा का सामान</b><span>अनाज और जरूरत की चीजें एक जगह।</span></div>
+  <div class="feature"><b>🪑 घर और निर्माण</b><span>फर्नीचर, गारा, सीमेंट और पेंट।</span></div>
+  <div class="feature"><b>📱 आसान ऑर्डर</b><span>कार्ट से सामान चुनें और WhatsApp पर भेजें।</span></div>
+</section>
+
+<section class="section" id="products">
+  <div class="section-heading">
+    <div><h2>हमारे प्रोडक्ट्स 🛍️</h2><p class="muted">अपनी पसंद का सामान खोजें और कार्ट में जोड़ें।</p></div>
+  </div>
+  <input id="search" class="searchbar" type="search" placeholder="🔍 चावल, गेहूँ, फर्नीचर या कोई सामान खोजें..." oninput="renderProducts()">
+  <div class="categories" id="categories"></div>
+  <div class="products" id="productGrid"></div>
+</section>
+
+<section class="section" id="order">
+  <div class="section-heading">
+    <div><h2>आपका ऑर्डर 🛒</h2><p class="muted">सामान और मात्रा जाँचकर अपनी जानकारी भरें।</p></div>
+  </div>
+  <div class="order-layout">
+    <div class="panel">
+      <h3>आपकी कार्ट</h3>
+      <div id="cartItems"><p class="muted">आपकी कार्ट खाली है। पहले कोई प्रोडक्ट जोड़ें।</p></div>
+      <div class="total"><span>कुल कीमत</span><span id="total">₹0</span></div>
+      <p class="note">* यहाँ दिखाई गई कीमतें उदाहरण के लिए हैं। अपने स्थानीय विक्रेता की सही कीमत डालें। डिलीवरी शुल्क अलग हो सकता है।</p>
+    </div>
+    <div class="panel">
+      <h3>ग्राहक की जानकारी</h3>
+      <form id="orderForm">
+        <div class="field"><label for="customer">पूरा नाम *</label><input id="customer" required placeholder="अपना नाम लिखें"></div>
+        <div class="field"><label for="phone">मोबाइल नंबर *</label><input id="phone" type="tel" required pattern="[0-9]{10}" maxlength="10" placeholder="10 अंकों का नंबर"></div>
+        <div class="field"><label for="address">पूरा पता *</label><textarea id="address" required placeholder="गाँव, शहर, पिन कोड और डिलीवरी पता"></textarea></div>
+        <div class="field"><label for="payment">भुगतान का तरीका</label>
+          <select id="payment"><option>डिलीवरी पर भुगतान (COD)</option><option>UPI — विक्रेता से पुष्टि करें</option></select>
+        </div>
+        <div class="field"><label for="message">अतिरिक्त जानकारी</label><input id="message" placeholder="जैसे डिलीवरी समय या खास निर्देश"></div>
+        <button class="primary full" type="submit">📲 WhatsApp पर ऑर्डर भेजें</button>
+        <p class="note">ऑर्डर भेजने पर WhatsApp खुलेगा। भेजने से पहले आप मैसेज जाँच सकते हैं। अभी कोई ऑनलाइन भुगतान नहीं लिया जाता।</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div><div class="logo" style="color:white">🌱 GramBazaar</div><p>आपका स्थानीय ऑनलाइन बाजार।</p></div>
+    <div><b>Website Creator</b><p>Raj Kumar Nayak<br>Class 9th<br>School Project</p></div>
+    <div><b>संपर्क</b><p>ऑर्डर WhatsApp के जरिए भेजें।<br><a href="#order">ऑर्डर फॉर्म खोलें</a></p></div>
+  </div>
+  <p style="margin-top:25px">© <span id="year"></span> GramBazaar | Made with ❤️ by Raj Kumar Nayak</p>
+</footer>
+
+<script>
+// IMPORTANT: Replace this with your seller's WhatsApp number.
+// Use country code + number, without + or spaces. Example: 919876543210
+const SELLER_WHATSAPP = "919876543210";
+
+const products = [
+  {id:1,name:"बासमती चावल",category:"अनाज",price:90,unit:"kg",desc:"लंबे दाने वाला चावल",image:"https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=700&q=80"},
+  {id:2,name:"गेहूँ",category:"अनाज",price:32,unit:"kg",desc:"साफ गेहूँ, रोजमर्रा के लिए",image:"https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=700&q=80"},
+  {id:3,name:"दाल और अनाज",category:"अनाज",price:85,unit:"kg",desc:"घर की रसोई के लिए",image:"https://images.unsplash.com/photo-1515543904379-3d757afe72e4?auto=format&fit=crop&w=700&q=80"},
+  {id:4,name:"लकड़ी की टेबल",category:"फर्नीचर",price:1800,unit:"पीस",desc:"घर और ऑफिस के लिए",image:"https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?auto=format&fit=crop&w=700&q=80"},
+  {id:5,name:"लकड़ी की कुर्सी",category:"फर्नीचर",price:950,unit:"पीस",desc:"मजबूत और उपयोगी डिजाइन",image:"https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=700&q=80"},
+  {id:6,name:"सोफा",category:"फर्नीचर",price:8500,unit:"पीस",desc:"बैठक के कमरे के लिए",image:"https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=700&q=80"},
+  {id:7,name:"सीमेंट",category:"निर्माण",price:380,unit:"बैग",desc:"निर्माण कार्य के लिए",image:"https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=700&q=80"},
+  {id:8,name:"गारा और रेत",category:"निर्माण",price:700,unit:"लोड",desc:"निर्माण सामग्री — कीमत पुष्टि करें",image:"https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80"},
+  {id:9,name:"ईंटें",category:"निर्माण",price:9,unit:"ईंट",desc:"मकान निर्माण के लिए",image:"https://images.unsplash.com/photo-1590725140246-20acdee442be?auto=format&fit=crop&w=700&q=80"},
+  {id:10,name:"दीवार का पेंट",category:"पेंट",price:650,unit:"लीटर",desc:"घर की दीवारों के लिए",image:"https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&w=700&q=80"},
+  {id:11,name:"छोटे पौधे",category:"पौधे",price:60,unit:"पीस",desc:"घर और बगीचे के लिए",image:"https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&w=700&q=80"},
+  {id:12,name:"फलदार पौधा",category:"पौधे",price:120,unit:"पीस",desc:"बगीचे के लिए पौधा",image:"https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=700&q=80"},
+  {id:13,name:"ताजे फल",category:"किराना",price:100,unit:"kg",desc:"मौसम के अनुसार फल",image:"https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=700&q=80"},
+  {id:14,name:"सब्जियाँ",category:"किराना",price:40,unit:"kg",desc:"रोजमर्रा की ताजी सब्जियाँ",image:"https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=700&q=80"},
+  {id:15,name:"लकड़ी",category:"अन्य",price:500,unit:"लॉट",desc:"लकड़ी की उपलब्धता पूछें",image:"https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&w=700&q=80"},
+  {id:16,name:"घर के जरूरी सामान",category:"अन्य",price:150,unit:"सेट",desc:"रोजमर्रा के उपयोग की चीजें",image:"https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=700&q=80"}
+];
+
+let selectedCategory = "सभी";
+let cart = {};
+
+const categories = ["सभी", ...new Set(products.map(p=>p.category))];
+
+function renderCategories(){
+  document.getElementById("categories").innerHTML = categories.map(c =>
+    `<button class="category ${c===selectedCategory?"active":""}" onclick="setCategory('${c}')">${c}</button>`
+  ).join("");
+}
+function setCategory(c){
+  selectedCategory=c;
+  renderCategories();
+  renderProducts();
+}
+function renderProducts(){
+  const query=document.getElementById("search").value.toLowerCase().trim();
+  const list=products.filter(p=>
+    (selectedCategory==="सभी" || p.category===selectedCategory) &&
+    (p.name.toLowerCase().includes(query)||p.category.toLowerCase().includes(query)||p.desc.toLowerCase().includes(query))
+  );
+  const grid=document.getElementById("productGrid");
+  if(!list.length){
+    grid.innerHTML='<div class="empty">कोई सामान नहीं मिला। दूसरा नाम खोजें।</div>';
+    return;
+  }
+  grid.innerHTML=list.map(p=>`
+    <article class="card">
+      <img src="${p.image}" alt="${p.name}" loading="lazy"
+        onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80'">
+      <div class="card-body">
+        <span class="pill">${p.category}</span>
+        <h3>${p.name}</h3>
+        <p class="description">${p.desc}</p>
+        <div class="price">₹${p.price.toLocaleString("en-IN")} <small>/ ${p.unit}</small></div>
+        <button class="add" onclick="addToCart(${p.id})">＋ कार्ट में जोड़ें</button>
+      </div>
+    </article>`).join("");
+}
+function addToCart(id){
+  cart[id]=(cart[id]||0)+1;
+  renderCart();
+}
+function changeQty(id,amount){
+  cart[id]=(cart[id]||0)+amount;
+  if(cart[id]<=0) delete cart[id];
+  renderCart();
+}
+function renderCart(){
+  const ids=Object.keys(cart);
+  document.getElementById("cartCount").textContent=ids.reduce((sum,id)=>sum+cart[id],0);
+  const box=document.getElementById("cartItems");
+  if(!ids.length){
+    box.innerHTML='<p class="muted">आपकी कार्ट खाली है। पहले कोई प्रोडक्ट जोड़ें।</p>';
+  } else {
+    box.innerHTML=ids.map(id=>{
+      const p=products.find(x=>x.id===Number(id));
+      return `<div class="cart-row">
+        <div><b>${p.name}</b><small>₹${p.price.toLocaleString("en-IN")} / ${p.unit}</small></div>
+        <div class="qty">
+          <button onclick="changeQty(${p.id},-1)" aria-label="कम करें">−</button>
+          <b>${cart[id]}</b>
+          <button onclick="changeQty(${p.id},1)" aria-label="बढ़ाएँ">+</button>
+        </div>
+      </div>`;
+    }).join("");
+  }
+  const total=ids.reduce((sum,id)=>sum+products.find(p=>p.id===Number(id)).price*cart[id],0);
+  document.getElementById("total").textContent="₹"+total.toLocaleString("en-IN");
+}
+document.getElementById("orderForm").addEventListener("submit",function(e){
+  e.preventDefault();
+  const ids=Object.keys(cart);
+  if(!ids.length){
+    alert("कृपया पहले कार्ट में सामान जोड़ें।");
+    document.getElementById("products").scrollIntoView({behavior:"smooth"});
+    return;
+  }
+  if(SELLER_WHATSAPP==="919876543210"){
+    alert("पहले कोड में SELLER_WHATSAPP को अपने विक्रेता के असली WhatsApp नंबर से बदलें।");
+    return;
+  }
+  const phone=document.getElementById("phone").value.trim();
+  const name=document.getElementById("customer").value.trim();
+  const address=document.getElementById("address").value.trim();
+  const payment=document.getElementById("payment").value;
+  const extra=document.getElementById("message").value.trim();
+  const lines=ids.map(id=>{
+    const p=products.find(x=>x.id===Number(id));
+    return `• ${p.name} x ${cart[id]} ${p.unit} — ₹${(p.price*cart[id]).toLocaleString("en-IN")}`;
+  });
+  const total=ids.reduce((sum,id)=>sum+products.find(p=>p.id===Number(id)).price*cart[id],0);
+  const message=[
+    "🛍️ *GramBazaar Order*",
+    "",
+    "*ग्राहक:* "+name,
+    "*मोबाइल:* "+phone,
+    "*पता:* "+address,
+    "",
+    "*सामान:*",
+    ...lines,
+    "",
+    "*कुल अनुमानित कीमत:* ₹"+total.toLocaleString("en-IN"),
+    "*भुगतान:* "+payment,
+    "*अतिरिक्त जानकारी:* "+(extra||"नहीं"),
+    "",
+    "कृपया कीमत, उपलब्धता और डिलीवरी की पुष्टि करें।"
+  ].join("\n");
+  window.open("https://wa.me/"+SELLER_WHATSAPP+"?text="+encodeURIComponent(message),"_blank");
+});
+document.getElementById("year").textContent=new Date().getFullYear();
+renderCategories();
+renderProducts();
+renderCart();
+</script>
+</body>
+</html>
+
